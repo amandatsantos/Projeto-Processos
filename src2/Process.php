@@ -61,25 +61,19 @@ class Process {
     }
 
     public function getConflictObject() {
-       
-        return 'direitos e obrigações privadass';
+        return $this->descricao;
     }
 
     public function getParties() {
-        return $this->nomePartes; // lmebrar de alterar recepção do nome das partes
-    }
-
-    public function getProcedures() {
-        
-        return 'açõoes de conheciment'; 
+        return $this->nomePartes;
     }
 
     public function getCourt() {
-        return $this->tribunal; 
+        return $this->tribunal;
     }
 
-    public function __clone() {
-        $this->id = null; 
+    public function getSituation() {
+        return $this->situacao;
     }
 }
 ?>

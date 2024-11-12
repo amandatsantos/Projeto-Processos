@@ -1,16 +1,17 @@
 <?php
 // Validators/CivilValidator.php
+
+
 interface ValidatorInterface {
     public function validate(Process $process): bool;
 }
 
 class CivilValidator implements ValidatorInterface {
-    // rever quais são melhores para validação ainda ta meio tosco
-    private const VALID_PROCESS_TYPES = ['Civil'];
-    private const VALID_CONFLICT_OBJECTS = ['Direitos e obrigações privadas'];
+    // verificarse serão esses que darão a validação para cada campo
+    private const VALID_PROCESS_TYPES = ['Civil']; // talvez fazer o validador de tipo de processo no validator geral
+    private const VALID_CONFLICT_OBJECTS = ['Direitos e obrigações privadas']; 
     private const VALID_PARTIES = ['Indivíduos', 'Empresas'];
-    private const VALID_PROCEDURES = ['Ações de conhecimento', 'Ações de execução'];
-    private const VALID_COURTS = ['Varas cíveis', 'Juizados especiais'];
+    private const VALID_COURTS = ['Varas cíveis', 'Juizados especiais']; 
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
@@ -28,11 +29,6 @@ class CivilValidator implements ValidatorInterface {
             throw new Exception("Partes envolvidas inválidas.");
         }
 
-        // Verifica se os procedimentos legais são válidos
-        if (!in_array($process->getProcedures(), self::VALID_PROCEDURES)) {
-            throw new Exception("Procedimentos legais inválidos.");
-        }
-
         // Verifica se os tribunais competentes são válidos
         if (!in_array($process->getCourt(), self::VALID_COURTS)) {
             throw new Exception("Tribunais competentes inválidos.");
@@ -40,7 +36,5 @@ class CivilValidator implements ValidatorInterface {
 
         return true;
     }
-
-    
 }
-    ?>
+?>
