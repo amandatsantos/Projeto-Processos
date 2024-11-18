@@ -7,6 +7,7 @@ require_once 'ProcessValidator.php';
 require_once 'Validators/CivilValidator.php';
 require_once 'Validators/CriminalValidator.php';
 require_once 'Validators/FamilyValidator.php';
+require_once 'Validators/LaborValidator.php';
 // require 'vendor/autoload.php'; // Se estiver usando Composer
 
 
@@ -68,6 +69,24 @@ $processFamily = new Process(
     'Direitos e obrigações privadas'
 );
 
+$processLabor = new Process(
+    'Trabalhista',
+    '12345',
+    '2024-11-11',
+    'Indivíduos',
+    'João Silva vs. Maria Souza',
+    'Advogado Y',
+    'Vara Familiar',
+    '2024-10-01',
+    '2024-10-15',
+    '2024-10-20',
+    'Decisão 1',
+    '2024-11-05',
+    50000,
+    '2024-11-06',
+    'Ativo',
+    'Direitos e obrigações privadas'
+);
 
 // Instancia o validador correto com base no tipo de processo
 $processValidator = new ProcessValidator();
@@ -106,6 +125,19 @@ try {
         $facade = new ProcessFacade();
         $facade->createProcess($processFamily);
         echo "Processo Familiar salvo com sucesso!";
+    }
+
+        
+    if ($processLabor->tipoProcesso === 'Trabalhista') {
+        $validator = new LaborValidator();
+        $processValidator->setStrategy($validator);
+        $processValidator->validate($processLabor);
+        echo "Validação do processo cTrabalhista bem-sucedida.\n";
+
+        // Salva o processo se a validação passar
+        $facade = new ProcessFacade();
+        $facade->createProcess($processLabor);
+        echo "Processo trabalho salvo com sucesso!";
     }
 } catch (Exception $e) {
     echo "Erro na validação: " . $e->getMessage();
