@@ -1,10 +1,14 @@
 <?php
 // teste.php
+
 require_once 'Process.php';
 require_once 'ProcessFacade.php';
 require_once 'ProcessValidator.php';
 require_once 'Validators/CivilValidator.php';
 require_once 'Validators/CriminalValidator.php';
+require_once 'Validators/FamilyValidator.php';
+// require 'vendor/autoload.php'; // Se estiver usando Composer
+
 
 // Criação de um processo de exemplo
 $processCivil = new Process(
@@ -45,6 +49,26 @@ $processCriminal = new Process(
     'Crime de responsabilidade'
 );
 
+$processFamily = new Process(
+    'Familiar',
+    '12345',
+    '2024-11-11',
+    'Indivíduos',
+    'João Silva vs. Maria Souza',
+    'Advogado Y',
+    'Vara Familiar',
+    '2024-10-01',
+    '2024-10-15',
+    '2024-10-20',
+    'Decisão 1',
+    '2024-11-05',
+    50000,
+    '2024-11-06',
+    'Ativo',
+    'Direitos e obrigações privadas'
+);
+
+
 // Instancia o validador correto com base no tipo de processo
 $processValidator = new ProcessValidator();
 try {
@@ -70,6 +94,18 @@ try {
         $facade = new ProcessFacade();
         $facade->createProcess($processCriminal);
         echo "Processo criminal salvo com sucesso!";
+    }
+    
+    if ($processFamily->tipoProcesso === 'Familiar') {
+        $validator = new FamilyValidator();
+        $processValidator->setStrategy($validator);
+        $processValidator->validate($processFamily);
+        echo "Validação do processo cFamiliar bem-sucedida.\n";
+
+        // Salva o processo se a validação passar
+        $facade = new ProcessFacade();
+        $facade->createProcess($processFamily);
+        echo "Processo Familiar salvo com sucesso!";
     }
 } catch (Exception $e) {
     echo "Erro na validação: " . $e->getMessage();

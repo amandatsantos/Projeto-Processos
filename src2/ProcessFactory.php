@@ -9,6 +9,8 @@ class ProcessFactory {
                 return new Process('Civil');
             case 'Criminal':
                     return new Process('Criminal');
+            case 'Familiar':
+                    return new Process('Familiar');
 
             default:
                 throw new Exception("Tipo de processo inválido");
