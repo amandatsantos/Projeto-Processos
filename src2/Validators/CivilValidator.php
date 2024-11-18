@@ -10,9 +10,9 @@ require_once 'ProcessValidator.php';
 class CivilValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
     private const VALID_PROCESS_TYPES = ['Civil']; // talvez fazer o validador de tipo de processo no validator geral
-    private const VALID_CONFLICT_OBJECTS = ['Direitos e obrigações privadas']; 
-    private const VALID_PARTIES = ['Indivíduos', 'Empresas'];
-    private const VALID_COURTS = ['Varas cíveis', 'Juizados especiais']; 
+    private const VALID_CONFLICT_OBJECTS = ['Direitos e obrigações privadas', 'contratos', 'indenizações', 'propriedade' ]; 
+    private const VALID_PARTIES = ['física', 'jurídica', 'Consumidor', 'fornecedor', 'vizinhos', 'proprietários'];
+    private const VALID_COURTS = ['Vara cívil']; 
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
@@ -22,7 +22,7 @@ class CivilValidator implements ValidatorInterface {
 
         // Verifica se o objeto do conflito é válido
         if (!in_array($process->getConflictObject(), self::VALID_CONFLICT_OBJECTS)) {
-            throw new Exception("Objeto do conflito inválido.");
+            throw new Exception("Objeto do conflito inválido. teste");
         }
 
         // Verifica se as partes envolvidas são válidas

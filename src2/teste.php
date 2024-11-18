@@ -12,14 +12,16 @@ require_once 'Validators/LaborValidator.php';
 
 
 // Criação de um processo de exemplo
-$processCivil = new Process(
-    'Civil',
-    '11111',
-    '2024-11-11',
-    'Indivíduos',
+
+
+$processFamily = new Process(
+    'Familiar', //tipo processo
+    '123655',
+    '2024-11-15',
+    'ex-cônjuges', // partes envolvidas
     'João Silva vs. Maria Souza',
-    'Advogado X',
-    'Varas cíveis', 
+    'Advogado Y',
+    'Vara Familiar', // corte de tramitação
     '2024-10-01',
     '2024-10-15',
     '2024-10-20',
@@ -27,37 +29,18 @@ $processCivil = new Process(
     '2024-11-05',
     50000,
     '2024-11-06',
-    'Ativo', 
-    'Direitos e obrigações privadas'
+    'Ativo',
+    'Guarda dos filhos' // objeto de conflito
 );
 
 $processCriminal = new Process(
-    'Criminal',
-    '67890',
-    '2024-11-12',
-    'Indivíduos',
-    'Carlos Silva vs. Estado',
+    'Criminal', //tipo processo
+    '151515',
+    '2024-11-20',
+    'Ministério Público', // partes envolvidas
+    'João Silva vs. Estado',
     'Advogado Y',
-    'Tribunal Penal',
-    '2024-10-05',
-    '2024-10-18',
-    '2024-10-25',
-    'Decisão preliminar',
-    '2024-11-08',
-    200000,
-    '2024-11-10',
-    'Em julgamento',
-    'Crime de responsabilidade'
-);
-
-$processFamily = new Process(
-    'Familiar',
-    '12345',
-    '2024-11-11',
-    'Indivíduos',
-    'João Silva vs. Maria Souza',
-    'Advogado Y',
-    'Vara Familiar',
+    'Vara Criminal', // corte de tramitação
     '2024-10-01',
     '2024-10-15',
     '2024-10-20',
@@ -66,17 +49,17 @@ $processFamily = new Process(
     50000,
     '2024-11-06',
     'Ativo',
-    'Direitos e obrigações privadas'
+    'contravenções' // objeto de conflito
 );
 
 $processLabor = new Process(
-    'Trabalhista',
-    '12345',
-    '2024-11-11',
-    'Indivíduos',
-    'João Silva vs. Maria Souza',
+    'Trabalhista', //tipo processo
+    '151515',
+    '2024-11-20',
+    'Empregado', // partes envolvidas
+    'João Silva vs. Azaleia',
     'Advogado Y',
-    'Vara Familiar',
+    'Vara do Trabalho', // corte de tramitação
     '2024-10-01',
     '2024-10-15',
     '2024-10-20',
@@ -85,13 +68,33 @@ $processLabor = new Process(
     50000,
     '2024-11-06',
     'Ativo',
-    'Direitos e obrigações privadas'
+    'demissao' // objeto de conflito
 );
 
+$processCivil = new Process(
+    'Civil', //tipo processo
+    '151515',
+    '2024-11-20',
+    'jurídica', // partes envolvidas
+    'João Silva vs. Azaleia',
+    'Advogado Y',
+    'Vara cívil', // corte de tramitação
+    '2024-10-01',
+    '2024-10-15',
+    '2024-10-20',
+    'Decisão 1',
+    '2024-11-05',
+    50000,
+    '2024-11-06',
+    'Ativo',
+    'contratos' // objeto de conflito
+);
+
+// lm,ebrar de fazer a validação com  maiscula ou minuscula
 // Instancia o validador correto com base no tipo de processo
 $processValidator = new ProcessValidator();
 try {
-    if ($processCivil->tipoProcesso === 'Civil') {
+    if (isset($processCivil) && $processCivil->getType() === 'Civil') {
         $validator = new CivilValidator();
         $processValidator->setStrategy($validator);
         $processValidator->validate($processCivil);
@@ -103,7 +106,7 @@ try {
         echo "Processo civil salvo com sucesso!\n";
     }
 
-    if ($processCriminal->tipoProcesso === 'Criminal') {
+    if (isset($processCriminal) && $processCriminal->getType() === 'Criminal') {
         $validator = new CriminalValidator();
         $processValidator->setStrategy($validator);
         $processValidator->validate($processCriminal);
@@ -112,32 +115,31 @@ try {
         // Salva o processo se a validação passar
         $facade = new ProcessFacade();
         $facade->createProcess($processCriminal);
-        echo "Processo criminal salvo com sucesso!";
+        echo "Processo criminal salvo com sucesso!\n";
     }
-    
-    if ($processFamily->tipoProcesso === 'Familiar') {
+
+    if (isset($processFamily) && $processFamily->getType() === 'Familiar') {
         $validator = new FamilyValidator();
         $processValidator->setStrategy($validator);
         $processValidator->validate($processFamily);
-        echo "Validação do processo cFamiliar bem-sucedida.\n";
+        echo "Validação do processo familiar bem-sucedida.\n";
 
         // Salva o processo se a validação passar
         $facade = new ProcessFacade();
         $facade->createProcess($processFamily);
-        echo "Processo Familiar salvo com sucesso!";
+        echo "Processo familiar salvo com sucesso!\n";
     }
 
-        
-    if ($processLabor->tipoProcesso === 'Trabalhista') {
+    if (isset($processLabor) && $processLabor->getType() === 'Trabalhista') {
         $validator = new LaborValidator();
         $processValidator->setStrategy($validator);
         $processValidator->validate($processLabor);
-        echo "Validação do processo cTrabalhista bem-sucedida.\n";
+        echo "Validação do processo trabalhista bem-sucedida.\n";
 
         // Salva o processo se a validação passar
         $facade = new ProcessFacade();
         $facade->createProcess($processLabor);
-        echo "Processo trabalho salvo com sucesso!";
+        echo "Processo trabalhista salvo com sucesso!\n";
     }
 } catch (Exception $e) {
     echo "Erro na validação: " . $e->getMessage();

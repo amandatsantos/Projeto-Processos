@@ -7,9 +7,9 @@ require_once 'ProcessValidator.php';
 class FamilyValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
     private const VALID_PROCESS_TYPES = ['Familiar']; // talvez fazer o validador de tipo de processo no validator geral
-    private const VALID_CONFLICT_OBJECTS = ['Direitos e obrigações privadas', 'teste']; 
-    private const VALID_PARTIES = ['Indivíduos', 'Empresas'];
-    private const VALID_COURTS = ['Varas cíveis', 'Juizados especiais', 'Tribunal Penal','Vara Familiar']; 
+    private const VALID_CONFLICT_OBJECTS = ['Divorcio', 'Guarda dos filhos', 'Pensao','reconhecimento de paternidade']; 
+    private const VALID_PARTIES = ['Cônjuges', 'ex-cônjuges', 'filhos', 'parentes próximos'];
+    private const VALID_COURTS = ['Vara Familiar']; 
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido

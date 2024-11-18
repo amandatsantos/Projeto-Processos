@@ -10,9 +10,9 @@ require_once 'ProcessValidator.php';
 class CriminalValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
     private const VALID_PROCESS_TYPES = ['Criminal']; // talvez fazer o validador de tipo de processo no validator geral
-    private const VALID_CONFLICT_OBJECTS = ['Crime de responsabilidade']; 
-    private const VALID_PARTIES = ['Indivíduos', 'Empresas'];
-    private const VALID_COURTS = ['Varas cíveis', 'Juizados especiais', 'Tribunal Penal']; 
+    private const VALID_CONFLICT_OBJECTS = ['Infrações penais', 'contravenções', 'Homicídio', 'roubo', 'furto', 'lesão corporal', 'tráfico de drogas']; 
+    private const VALID_PARTIES = ['Acusado', 'Ministério Público', 'vítima' ];
+    private const VALID_COURTS = ['Vara Criminal']; 
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
