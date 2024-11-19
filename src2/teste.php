@@ -27,6 +27,20 @@ $processCivil = new Process(
     "Restituição do valor pago"// obejto de conflito
 );
 
+$processFamily = new Process(
+    "Familiar", // tipo processo 
+    "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
+    "Descrição do caso", "Fatos do caso", 
+    "prestacao de alimentos",// direito violado
+     "Pedido",
+    "Juízo 1", 
+    "2 Vara familiar",// qual instancia de uso
+     "Comarca Central", 50000.00, 
+    "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
+    "pensao"// obejto de conflito
+);
+
+
 $processValidator = new ProcessValidator();
 try {
     if (isset($processCivil) && $processCivil->getTipoProcesso() === 'Civil') {
