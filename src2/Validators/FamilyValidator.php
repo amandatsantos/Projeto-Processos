@@ -13,7 +13,7 @@ class FamilyValidator implements ValidatorInterface {
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
-        if (!in_array($process->getType(), self::VALID_PROCESS_TYPES)) {
+        if (!in_array($process->getTipoProcesso(), self::VALID_PROCESS_TYPES)) {
             throw new Exception("Tipo de processo inválido.");
         }
 

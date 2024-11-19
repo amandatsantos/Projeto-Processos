@@ -1,8 +1,7 @@
 <?php
 require_once 'config/DatabaseConnection.php';
 
-
-//facade
+// Facade
 class ProcessFacade {
     private $conn;
 
@@ -11,48 +10,73 @@ class ProcessFacade {
         $this->conn = $database->connect();
     }
 
-    //rever essa query
     public function createProcess($process) {
-        $sql = "INSERT INTO Processos (
-                    tipoProcesso, numeroProcesso, dataDistribuicao, nomePartes, advogados, 
-                    juizResponsavel, tribunal, dataPeticaoInicial, dataContestacao, 
-                    dataAudienciaConciliacao, decisoesInterlocutorias, dataSentenca, 
-                    valorCausa, dataIntimacao, situacao, descricao
-                ) VALUES (
-                    :tipoProcesso, :numeroProcesso, :dataDistribuicao, :nomePartes, :advogados, 
-                    :juizResponsavel, :tribunal, :dataPeticaoInicial, :dataContestacao, 
-                    :dataAudienciaConciliacao, :decisoesInterlocutorias, :dataSentenca, 
-                    :valorCausa, :dataIntimacao, :situacao, :descricao
-                )";
-        
-        $stmt = $this->conn->prepare($sql);
+        $sql = "INSERT INTO process (
+            tipoProcesso, autorNome, autorIdentificacao, reuNome, reuIdentificacao, objetoConflito,
+            descricaoCaso, fatos, direitoViolado, pedido, juizo, 
+            varaTribunal, comarca, valorCausa, advogadoNome, 
+            advogadoOAB, advogadoContato, dataProtocolacao
+        ) VALUES (
+            :tipoProcesso, :autorNome, :autorIdentificacao, :reuNome, :reuIdentificacao, :objetoConflito,
+            :descricaoCaso, :fatos, :direitoViolado, :pedido, :juizo, 
+            :varaTribunal, :comarca, :valorCausa, :advogadoNome, 
+            :advogadoOAB, :advogadoContato, :dataProtocolacao
+        )";
     
-       
-        $stmt->bindParam(':tipoProcesso', $process->tipoProcesso);
-        $stmt->bindParam(':numeroProcesso', $process->numeroProcesso);
-        $stmt->bindParam(':dataDistribuicao', $process->dataDistribuicao);
-        $stmt->bindParam(':nomePartes', $process->nomePartes);
-        $stmt->bindParam(':advogados', $process->advogados);
-        $stmt->bindParam(':juizResponsavel', $process->juizResponsavel);
-        $stmt->bindParam(':tribunal', $process->tribunal);
-        $stmt->bindParam(':dataPeticaoInicial', $process->dataPeticaoInicial);
-        $stmt->bindParam(':dataContestacao', $process->dataContestacao);
-        $stmt->bindParam(':dataAudienciaConciliacao', $process->dataAudienciaConciliacao);
-        $stmt->bindParam(':decisoesInterlocutorias', $process->decisoesInterlocutorias);
-        $stmt->bindParam(':dataSentenca', $process->dataSentenca);
-        $stmt->bindParam(':valorCausa', $process->valorCausa);
-        $stmt->bindParam(':dataIntimacao', $process->dataIntimacao);
-        $stmt->bindParam(':situacao', $process->situacao);
-        $stmt->bindParam(':descricao', $process->descricao);
+        try {
+            $stmt = $this->conn->prepare($sql);
     
-        if ($stmt->execute()) {
-            return $this->conn->lastInsertId();
+            $tipoProcesso = $process->getTipoProcesso();
+            $autorNome = $process->getAutorNome();
+            $autorIdentificacao = $process->getAutorIdentificacao();
+            $reuNome = $process->getReuNome();
+            $reuIdentificacao = $process->getReuIdentificacao();
+            $objetoConflito = $process->getObjetoConflito();
+            $descricaoCaso = $process->getDescricaoCaso();
+            $fatos = $process->getFatos();
+            $direitoViolado = $process->getDireitoViolado();
+            $pedido = $process->getPedido();
+            $juizo = $process->getJuizo();
+            $varaTribunal = $process->getVaraTribunal();
+            $comarca = $process->getComarca();
+            $valorCausa = $process->getValorCausa();
+            $advogadoNome = $process->getAdvogadoNome();
+            $advogadoOAB = $process->getAdvogadoOAB();
+            $advogadoContato = $process->getAdvogadoContato();
+            $dataProtocolacao = $process->getDataProtocolacao();
+    
+            $stmt->bindParam(':tipoProcesso', $tipoProcesso);
+            $stmt->bindParam(':autorNome', $autorNome);
+            $stmt->bindParam(':autorIdentificacao', $autorIdentificacao);
+            $stmt->bindParam(':reuNome', $reuNome);
+            $stmt->bindParam(':reuIdentificacao', $reuIdentificacao);
+            $stmt->bindParam(':objetoConflito', $objetoConflito);
+            $stmt->bindParam(':descricaoCaso', $descricaoCaso);
+            $stmt->bindParam(':fatos', $fatos);
+            $stmt->bindParam(':direitoViolado', $direitoViolado);
+            $stmt->bindParam(':pedido', $pedido);
+            $stmt->bindParam(':juizo', $juizo);
+            $stmt->bindParam(':varaTribunal', $varaTribunal);
+            $stmt->bindParam(':comarca', $comarca);
+            $stmt->bindParam(':valorCausa', $valorCausa);
+            $stmt->bindParam(':advogadoNome', $advogadoNome);
+            $stmt->bindParam(':advogadoOAB', $advogadoOAB);
+            $stmt->bindParam(':advogadoContato', $advogadoContato);
+            $stmt->bindParam(':dataProtocolacao', $dataProtocolacao);
+    
+            if ($stmt->execute()) {
+                return $this->conn->lastInsertId(); // Retorna o ID do processo inserido
+            }
+            return false; // Falha na execução
+        } catch (Exception $e) {
+            // 
+            echo "Erro ao salvar processo: " . $e->getMessage();
+            return false;
         }
-        return false;
     }
 
     public function readProcess($id) {
-        $sql = "SELECT * FROM processes WHERE id = :id";
+        $sql = "SELECT * FROM process WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -60,38 +84,63 @@ class ProcessFacade {
     }
 
     public function updateProcess($process) {
-        $sql = "UPDATE processes SET type = :type, number = :number, start_date = :start_date, status = :status WHERE id = :id";
+        $sql = "UPDATE process SET 
+                    tipoProcesso = :tipoProcesso,
+                    autorNome = :autorNome,
+                    autorIdentificacao = :autorIdentificacao,
+                    reuNome = :reuNome,
+                    reuIdentificacao = :reuIdentificacao,
+                    objetoConflito=:objetoConflito,
+                    descricaoCaso = :descricaoCaso,
+                    fatos = :fatos,
+                    direitoViolado = :direitoViolado,
+                    pedido = :pedido,
+                    juizo = :juizo,
+                    varaTribunal = :varaTribunal,
+                    comarca = :comarca,
+                    valorCausa = :valorCausa,
+                    advogadoNome = :advogadoNome,
+                    advogadoOAB = :advogadoOAB,
+                    advogadoContato = :advogadoContato,
+                    dataProtocolacao = :dataProtocolacao
+                WHERE id = :id";
+
         $stmt = $this->conn->prepare($sql);
+
         $stmt->bindParam(':id', $process->id);
-        $stmt->bindParam(':type', $process->type);
-        $stmt->bindParam(':number', $process->number);
-        $stmt->bindParam(':start_date', $process->startDate);
-        $stmt->bindParam(':status', $process->status);
+        $stmt->bindParam(':tipoProcesso', $process->tipoProcesso);
+        $stmt->bindParam(':autorNome', $process->autorNome);
+        $stmt->bindParam(':autorIdentificacao', $process->autorIdentificacao);
+        $stmt->bindParam(':reuNome', $process->reuNome);
+        $stmt->bindParam(':reuIdentificacao', $process->reuIdentificacao);
+        $stmt->bindParam(':objetoConflit', $process->objetoConflito);
+        $stmt->bindParam(':descricaoCaso', $process->descricaoCaso);
+        $stmt->bindParam(':fatos', $process->fatos);
+        $stmt->bindParam(':direitoViolado', $process->direitoViolado);
+        $stmt->bindParam(':pedido', $process->pedido);
+        $stmt->bindParam(':juizo', $process->juizo);
+        $stmt->bindParam(':varaTribunal', $process->varaTribunal);
+        $stmt->bindParam(':comarca', $process->comarca);
+        $stmt->bindParam(':valorCausa', $process->valorCausa);
+        $stmt->bindParam(':advogadoNome', $process->advogadoNome);
+        $stmt->bindParam(':advogadoOAB', $process->advogadoOAB);
+        $stmt->bindParam(':advogadoContato', $process->advogadoContato);
+        $stmt->bindParam(':dataProtocolacao', $process->dataProtocolacao);
 
         return $stmt->execute();
     }
 
     public function deleteProcess($id) {
-        $sql = "DELETE FROM processes WHERE id = :id";
+        $sql = "DELETE FROM process WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
 
-    // 
     public function getAllProcesses() {
-        $sql = "SELECT * FROM processos";
-        $result = $this->conn->query($sql);
-        $processos = [];
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $processos[] = $row;
-            }
-        }
-
-        return $processos;
+        $sql = "SELECT * FROM process";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }
 ?>

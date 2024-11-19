@@ -1,7 +1,7 @@
 <?php
 class DatabaseConnection {
     private $host = 'localhost'; 
-    private $db_name = 'process_management'; 
+    private $db_name = 'protocalacao_processo'; 
     private $username = 'root';
     private $password = 'root'; 
     private $conn;
@@ -26,7 +26,7 @@ class DatabaseConnection {
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // n dar BO na criação ou uso do banco
-            $this->conn->exec("USE process_management; ");
+            $this->conn->exec("USE protocalacao_processo;");
             $this->createTables();
         } catch (PDOException $e) {
             echo "Connection error: " . $e->getMessage();
@@ -56,35 +56,32 @@ class DatabaseConnection {
 
     
     private function createTables() {
-        
         $query = "
-            CREATE TABLE if not exists processos (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    tipoProcesso VARCHAR(255) NOT NULL,
-                    numeroProcesso VARCHAR(50),
-                    dataDistribuicao DATE,
-                    nomePartes TEXT,
-                    advogados TEXT,
-                    juizResponsavel VARCHAR(255),
-                    tribunal VARCHAR(255),
-                    dataPeticaoInicial DATE,
-                    dataContestacao DATE,
-                    dataAudienciaConciliacao DATE,
-                    decisoesInterlocutorias TEXT,
-                    dataSentenca DATE,
-                    valorCausa DECIMAL(15, 2),
-                    dataIntimacao DATE,
-                    situacao VARCHAR(100),
-                    descricao TEXT
-                );
-                ";
-
+        CREATE TABLE IF NOT EXISTS process (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            tipoProcesso VARCHAR(255) NOT NULL,
+            autorNome VARCHAR(255),
+            autorIdentificacao VARCHAR(255),
+            reuNome VARCHAR(255),
+            reuIdentificacao VARCHAR(255),
+            objetoConflito VARCHAR(255),
+            descricaoCaso TEXT,
+            fatos TEXT,
+            direitoViolado TEXT,
+            pedido TEXT,
+            juizo VARCHAR(255),
+            varaTribunal VARCHAR(255),
+            comarca VARCHAR(255),
+            valorCausa DECIMAL(10, 2),
+            advogadoNome VARCHAR(255),
+            advogadoOAB VARCHAR(50),
+            advogadoContato VARCHAR(50),
+            dataProtocolacao DATE
+        );";
         try {
             $this->conn->exec($query);
-            echo "Tabela 'processos' criada com sucesso.\n";
         } catch (PDOException $e) {
             echo "Erro ao criar a tabela: " . $e->getMessage();
         }
-    }
-}
+    }}
 ?>
