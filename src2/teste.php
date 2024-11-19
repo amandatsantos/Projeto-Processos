@@ -13,6 +13,31 @@ require_once 'Validators/LaborValidator.php';
 // Criação de um processo de exemplo
 
 
+$processLabor = new Process(
+    "Trabalhista", // tipo processo 
+    "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
+    "Descrição do caso", "Fatos do caso", 
+    "horas extras nao pagas",// direito violado
+     "Pedido",
+    "Juízo 1", 
+    "3 vara do trabalho",// qual instancia de uso
+     "Comarca Central", 50000.00, 
+    "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
+    "horas extras"// obejto de conflito
+);
+
+$processCriminal = new Process(
+    "Criminal", // tipo processo 
+    "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
+    "Descrição do caso", "Fatos do caso", 
+    "direito a propriedade",// direito violado
+     "Pedido",
+    "Juízo 1", 
+    "teste",// qual instancia de uso
+     "Comarca Central", 50000.00, 
+    "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
+    "roubo"// obejto de conflito
+);
 // Criação de um processo de exemplo com novos campos
 $processCivil = new Process(
     "Civil", // tipo processo 
@@ -39,6 +64,7 @@ $processFamily = new Process(
     "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
     "pensao"// obejto de conflito
 );
+
 
 
 $processValidator = new ProcessValidator();
