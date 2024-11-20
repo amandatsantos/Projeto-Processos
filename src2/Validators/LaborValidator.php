@@ -1,15 +1,34 @@
 <?php
 // Validators/FamilyValidator.php
 
-require_once 'ProcessValidator.php';
+require_once __DIR__ . '/../Models/ProcessValidator.php';
 
 
 class LaborValidator implements ValidatorInterface {
-    // verificarse serão esses que darão a validação para cada campo
-    private const VALID_PROCESS_TYPES = ['Trabalhista']; // talvez fazer o validador de tipo de processo no validator geral VALID_DIREITO_VIOLADO
-    private const  VALID_DIREITO_VIOLADO = ['relaçao empregaticia', 'demissao', 'ferias', '13 salario', 'demissao sem justa causa', 'atraso no pagamento de salarios', 'horas extras nao pagas', 'acidente de trabalho' ]; 
-    private const VALID_CONFLICT_OBJECTS = ['pagamento de horas extras','salario minimo', 'horas extras'];
-    private const VALID_COURTS = ['1 vara do trabalho','2 vara do trabalho', '3 vara do trabalho']; 
+    private const VALID_PROCESS_TYPES = ['trabalhista']; // talvez fazer o validador de tipo de processo no validator geral
+
+    private const VALID_DIREITO_VIOLADO = [
+        'relacao empregaticia',
+        'demissao',
+        'ferias',
+        '13 salario',
+        'demissao sem justa causa',
+        'atraso no pagamento de salarios',
+        'horas extras nao pagas',
+        'acidente de trabalho'
+    ];
+
+    private const VALID_CONFLICT_OBJECTS = [
+        'pagamento de horas extras',
+        'salario minimo',
+        'horas extras'
+    ];
+
+    private const VALID_COURTS = [
+        '1 vara do trabalho',
+        '2 vara do trabalho',
+        '3 vara do trabalho'
+    ];
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
@@ -32,6 +51,19 @@ class LaborValidator implements ValidatorInterface {
         }
 
         return true;
+    }
+
+
+    public static function getObjetoConflito(): array {
+        return self::VALID_CONFLICT_OBJECTS;
+    }
+
+    public static function getDireitoViolado(): array {
+        return self::VALID_DIREITO_VIOLADO;
+    }
+
+    public static function getCortes(): array {
+        return self::VALID_COURTS;
     }
 }
 ?>

@@ -19,6 +19,48 @@ class Process {
     private $dataProtocolacao;
     private $objetoConflito; 
 
+    public function clone() {
+        return new Process(
+            $this->tipoProcesso,
+            $this->autorNome,
+            $this->autorIdentificacao,
+            $this->reuNome,
+            $this->reuIdentificacao,
+            $this->descricaoCaso,
+            $this->fatos,
+            $this->direitoViolado,
+            $this->pedido,
+            $this->juizo,
+            $this->varaTribunal,
+            $this->comarca,
+            $this->valorCausa,
+            $this->advogadoNome,
+            $this->advogadoOAB,
+            $this->advogadoContato,
+            $this->dataProtocolacao,
+            $this->objetoConflito
+        );
+    }
+
+    public function __toString() {
+        return "Processo do tipo '{$this->tipoProcesso}',
+                 Cliente: '{$this->autorNome}',
+                 CPF: '{$this->autorIdentificacao}', 
+                 Oponente: '{$this->reuNome}',
+                 CPF Oponente: '{$this->reuIdentificacao}', 
+                Descrição: '{$this->descricaoCaso}', 
+                 Fatos: '{$this->fatos}', 
+                Direito Violado: '{$this->direitoViolado}',
+                 Pedido: '{$this->pedido}', 
+                Juízo: '{$this->juizo}'
+                , Instância: '{$this->varaTribunal}',      
+                 Comarca: '{$this->comarca}', 
+                Valor da Causa: '{$this->valorCausa}',
+                 Advogado: '{$this->advogadoOAB}',
+                Contato Advogado: '{$this->advogadoContato}', 
+                Data de Cadastro: '{$this->dataProtocolacao}', 
+                Objeto de Conflito: '{$this->objetoConflito}'";
+    }
     public function __construct(
         $tipoProcesso, $autorNome, $autorIdentificacao, $reuNome, $reuIdentificacao, $descricaoCaso, 
         $fatos, $direitoViolado, $pedido, $juizo, $varaTribunal, $comarca, $valorCausa, $advogadoNome, 

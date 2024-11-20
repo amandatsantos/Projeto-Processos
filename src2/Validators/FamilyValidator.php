@@ -1,15 +1,35 @@
 <?php
 // Validators/FamilyValidator.php
 
-require_once 'ProcessValidator.php';
+require_once __DIR__ . '/../Models/ProcessValidator.php';
+
 
 
 class FamilyValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
-    private const VALID_PROCESS_TYPES = ['Familiar']; // talvez fazer o validador de tipo de processo no validator geral
-    private const VALID_CONFLICT_OBJECTS = ['Divorcio','Investigação de Paternidade','Adoção', 'guarda', 'pensao', 'interdicao', 'partilha de bens']; 
-    private const VALID_DIREITO_VIOLADO = ['Direito à dissolução do vínculo matrimonial','Direito à filiação', 'prestacao de alimentos','convivencia familiar'];
-    private const VALID_COURTS = ['1 Vara familiar' ,'1 Vara familiar', '2 Vara familiar']; 
+    private const VALID_PROCESS_TYPES = ['familiar']; // talvez fazer o validador de tipo de processo no validator geral
+
+    private const VALID_CONFLICT_OBJECTS = [
+        'divorcio',
+        'investigacao de paternidade',
+        'adocao',
+        'guarda',
+        'pensao',
+        'interdicao',
+        'partilha de bens'
+    ];
+
+    private const VALID_DIREITO_VIOLADO = [
+        'direito a dissolucao do vinculo matrimonial',
+        'direito a filiacao',
+        'prestacao de alimentos',
+        'convivencia familiar'
+    ];
+
+    private const VALID_COURTS = [
+        '1 vara familiar',
+        '2 vara familiar'
+    ];
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
@@ -33,6 +53,20 @@ class FamilyValidator implements ValidatorInterface {
         }
 
         return true;
+    }
+
+
+// utilização desses para validar no cadastro
+    public static function getObjetoConflito(): array {
+        return self::VALID_CONFLICT_OBJECTS;
+    }
+
+    public static function getDireitoViolado(): array {
+        return self::VALID_DIREITO_VIOLADO;
+    }
+
+    public static function getCortes(): array {
+        return self::VALID_COURTS;
     }
 }
 ?>

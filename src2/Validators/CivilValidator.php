@@ -1,7 +1,8 @@
 <?php
 // Validators/CivilValidator.php
 
-require_once 'ProcessValidator.php';
+require_once __DIR__ . '/../Models/ProcessValidator.php';
+
 
 // interface ValidatorInterface {
 //     public function validate(Process $process): bool;
@@ -10,9 +11,20 @@ require_once 'ProcessValidator.php';
 class CivilValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
     private const VALID_PROCESS_TYPES = ['Civil']; // talvez fazer o validador de tipo de processo no validator geral
-    private const VALID_CONFLICT_OBJECTS = ['Conflito sobre contrato comercial', 'contratos', 'indenizações', 'propriedade', 'Conflito de terras','Restituição do valor pago' ]; 
-    private const VALID_DIREITO_VIOLADO= ['Direito do consumidoro'];
-    private const VALID_COURTS = ['1 Vara cívil' ,'1 Vara cívi', '2 Vara cívil']; 
+
+    private const VALID_CONFLICT_OBJECTS = [
+        'conflito sobre contrato comercial',
+        'contratos',
+        'indenizacoes',
+        'propriedade',
+        'conflito de terras',
+        'restituicao do valor pago'
+    ];
+    
+    private const VALID_DIREITO_VIOLADO = ['direito do consumidor'];
+    
+    private const VALID_COURTS = ['1 vara civil', '1 vara civi', '2 vara civil'];
+    
 
     public function validate(Process $process): bool {
         // // Verifica se o tipo de processo é válido
@@ -36,6 +48,18 @@ class CivilValidator implements ValidatorInterface {
         }
 
         return true;
+    }
+
+    public static function getObjetoConflito(): array {
+        return self::VALID_CONFLICT_OBJECTS;
+    }
+
+    public static function getDireitoViolado(): array {
+        return self::VALID_DIREITO_VIOLADO;
+    }
+
+    public static function getCortes(): array {
+        return self::VALID_COURTS;
     }
 }
 ?>

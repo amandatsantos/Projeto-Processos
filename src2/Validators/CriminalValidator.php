@@ -1,18 +1,34 @@
 <?php
 // Validators/CriminalValidator.php
 
-require_once 'ProcessValidator.php';
-
-// interface ValidatorInterface {
-//     public function validate(Process $process): bool;
-// }
+require_once __DIR__ . '/../Models/ProcessValidator.php';
 
 class CriminalValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
-    private const VALID_PROCESS_TYPES = ['Criminal']; // talvez fazer o validador de tipo de processo no validator geral
-    private const VALID_CONFLICT_OBJECTS = ['Infrações penais', 'contravenções', 'Homicídio', 'roubo', 'furto', 'lesão corporal', 'tráfico de drogas']; 
-    private const VALID_DIREITO_VIOLADO =[ 	'Direito à vida', 'direito a propriedade', 'saude publica' ];
-    private const VALID_COURTS = ['1 Vara Criminal', '2 Vara Criminal', '3 Vara Criminal', 'teste']; 
+    private const VALID_PROCESS_TYPES = ['criminal']; // talvez fazer o validador de tipo de processo no validator geral
+
+    private const VALID_CONFLICT_OBJECTS = [
+        'infracoes penais',
+        'contravencoes',
+        'homicidio',
+        'roubo',
+        'furto',
+        'lesao corporal',
+        'trafico de drogas'
+    ];
+
+    private const VALID_DIREITO_VIOLADO = [
+        'direito a vida',
+        'direito a propriedade',
+        'saude publica'
+    ];
+
+    private const VALID_COURTS = [
+        '1 vara criminal',
+        '2 vara criminal',
+        '3 vara criminal',
+        'teste'
+    ];
 
     public function validate(Process $process): bool {
         // Verifica se o tipo de processo é válido
@@ -36,6 +52,19 @@ class CriminalValidator implements ValidatorInterface {
         }
 
         return true;
+    }
+
+
+    public static function getObjetoConflito(): array {
+        return self::VALID_CONFLICT_OBJECTS;
+    }
+
+    public static function getDireitoViolado(): array {
+        return self::VALID_DIREITO_VIOLADO;
+    }
+
+    public static function getCortes(): array {
+        return self::VALID_COURTS;
     }
 }
 ?>
