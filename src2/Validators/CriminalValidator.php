@@ -5,7 +5,7 @@ require_once __DIR__ . '/../Models/ProcessValidator.php';
 
 class CriminalValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
-    private const VALID_PROCESS_TYPES = ['criminal']; // talvez fazer o validador de tipo de processo no validator geral
+    private const VALID_PROCESS_TYPES = ['Criminal']; // talvez fazer o validador de tipo de processo no validator geral
 
     private const VALID_CONFLICT_OBJECTS = [
         'infracoes penais',
@@ -27,7 +27,7 @@ class CriminalValidator implements ValidatorInterface {
         '1 vara criminal',
         '2 vara criminal',
         '3 vara criminal',
-        'teste'
+ 
     ];
 
     public function validate(Process $process): bool {
@@ -54,6 +54,10 @@ class CriminalValidator implements ValidatorInterface {
         return true;
     }
 
+
+    public static function getTipoProcesso(): array {
+        return self::VALID_PROCESS_TYPES;
+    }
 
     public static function getObjetoConflito(): array {
         return self::VALID_CONFLICT_OBJECTS;

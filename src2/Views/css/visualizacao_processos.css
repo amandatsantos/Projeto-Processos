@@ -1,0 +1,218 @@
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo do título */
+h1 {
+    text-align: center;
+    color: #007BFF;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table th {
+    background-color: #007BFF;
+    color: #fff;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo das células das ações */
+.actions button {
+    padding: 8px 16px;
+    margin-right: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.detalhar-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.atualizar-button {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.actions button:hover {
+    transform: scale(1.05);
+}
+
+.detalhar-button:hover {
+    background-color: #218838;
+}
+
+.atualizar-button:hover {
+    background-color: #e0a800;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Botão geral */
+.button {
+    display: inline-block;
+    text-align: center;
+    padding: 12px 25px;
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 30px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.modal .close:hover,
+.modal .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .button {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin-top: 20%;
+    }
+}
+
+/* MODAL ATUALIZAR ;-; HORRIVEL DE MEXERR*/
+
+#modalContent {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    color: #333;
+}
+
+#modalContent form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#modalContent input, #modalContent select, #modalContent textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#modalContent h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #4A90E2;
+}
+
+
+#modalContent button {
+    padding: 10px 20px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#modalContent button:hover {
+    background-color: #357ABD;
+}

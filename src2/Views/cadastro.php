@@ -1,18 +1,22 @@
 <?php
-// Importar Validators
-require_once __DIR__ . '/../Validators/FamilyValidator.php';
-require_once __DIR__ . '/../Validators/CriminalValidator.php';
-require_once __DIR__ . '/../Validators/LaborValidator.php';
-require_once __DIR__ . '/../Validators/CivilValidator.php';
 
-// Dados dinâmicos
+require_once __DIR__ . '/../Controller/ProcessController.php';
+
+
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
+// Criar uma instância do controlador
+$controller = new ProcessController();
+
+// Processar o formulário se houver requisição POST
+$controller->handleRequest();
+
 $tipoProcesso = $_POST['tipo_processo'] ?? '';
-
 $objetoConflito = [];
 $direitoViolado = [];
 $cortes = [];
 
-//carrega do validator os dados com base no tipo selecionado
+// Carregar as opções do validator com base no tipo selecionado
 switch ($tipoProcesso) {
     case 'Familiar':
         $objetoConflito = FamilyValidator::getObjetoConflito();
@@ -38,6 +42,7 @@ switch ($tipoProcesso) {
         $tipoProcesso = '';
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -84,49 +89,49 @@ switch ($tipoProcesso) {
                         <option value="<?= $item ?>"><?= $item ?></option>
                     <?php endforeach; ?>
                 </select>
-              <label for="nome_cliente">Nome do Cliente</label>
-            <input type="text" name="nome_cliente" id="nome_cliente" required>
 
-            <label for="cpf_cliente">CPF do Cliente</label>
-            <input type="text" name="cpf_cliente" id="cpf_cliente" required>
+                <!-- Campos adicionais -->
+                <label for="nome_cliente">Nome do Cliente</label>
+                <input type="text" name="nome_cliente" id="nome_cliente" required>
 
-            <label for="oponente">Nome do Oponente</label>
-            <input type="text" name="oponente" id="oponente" required>
+                <label for="cpf_cliente">CPF do Cliente</label>
+                <input type="text" name="cpf_cliente" id="cpf_cliente" required>
 
-            <label for="cpf_oponente">CPF do Oponente</label>
-            <input type="text" name="cpf_oponente" id="cpf_oponente" required>
+                <label for="oponente">Nome do Oponente</label>
+                <input type="text" name="oponente" id="oponente" required>
 
-            <label for="descricao">Descrição do Caso</label>
-            <textarea name="descricao" id="descricao" required></textarea>
+                <label for="cpf_oponente">CPF do Oponente</label>
+                <input type="text" name="cpf_oponente" id="cpf_oponente" required>
 
-            <label for="fatos">Fatos do Caso</label>
-            <textarea name="fatos" id="fatos" required></textarea>
+                <label for="descricao">Descrição do Caso</label>
+                <textarea name="descricao" id="descricao" required></textarea>
 
-            <label for="pedido">Pedido</label>
-            <textarea name="pedido" id="pedido" required></textarea>
+                <label for="fatos">Fatos</label>
+                <textarea name="fatos" id="fatos" required></textarea>
 
-            <label for="juizo">Juízo</label>
-            <input type="text" name="juizo" id="juizo" required>
+                <label for="pedido">Pedido</label>
+                <textarea name="pedido" id="pedido" required></textarea>
 
+                <label for="juizo">Juízo</label>
+                <input type="text" name="juizo" id="juizo" required>
 
-            <label for="comarca">Comarca</label>
-            <input type="text" name="comarca" id="comarca" required>
+                <label for="comarca">Comarca</label>
+                <input type="text" name="comarca" id="comarca" required>
 
-            <label for="valor_causa">Valor da Causa</label>
-            <input type="number" name="valor_causa" id="valor_causa" required step="0.01">
+                <label for="valor_causa">Valor da Causa</label>
+                <input type="number" name="valor_causa" id="valor_causa" required>
 
-            <label for="advogado">Nome do Advogado</label>
-            <input type="text" name="advogado" id="advogado" required>
+                <label for="advogado">Advogado</label>
+                <input type="text" name="advogado" id="advogado" required>
 
-            <label for="oab">OAB do Advogado</label>
-            <input type="text" name="oab" id="oab" required>
+                <label for="oab">Número da OAB</label>
+                <input type="text" name="oab" id="oab" required>
 
-            <label for="contato_advogado">Contato do Advogado</label>
-            <input type="text" name="contato_advogado" id="contato_advogado" required>
+                <label for="contato_advogado">Contato do Advogado</label>
+                <input type="text" name="contato_advogado" id="contato_advogado" required>
 
-            <button type="submit" formaction="../process_form.php">Cadastrar Processo</button>
+                <button type="submit">Cadastrar Processo</button>
             <?php endif; ?>
-
         </form>
     </div>
 </body>

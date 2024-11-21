@@ -12,8 +12,7 @@
         <h1>Gestão de Processos</h1>
         <p>Selecione a funcionalidade desejada:</p>
         <a href="cadastro.php" class="button">Cadastro de Processo</a><br>
-        <a href="atualizar.php" class="button">Atualização de Cadastro</a><br>
-        <a href="vizualizar.php" class="button">Vizualizar Processos</a>
+        <a href="visualizar_processos.php" class="button">Vizualizar Processos</a>
     </div>
 </body>
 </html>

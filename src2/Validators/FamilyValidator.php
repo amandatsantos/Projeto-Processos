@@ -7,7 +7,7 @@ require_once __DIR__ . '/../Models/ProcessValidator.php';
 
 class FamilyValidator implements ValidatorInterface {
     // verificarse serão esses que darão a validação para cada campo
-    private const VALID_PROCESS_TYPES = ['familiar']; // talvez fazer o validador de tipo de processo no validator geral
+    private const VALID_PROCESS_TYPES = ['Familiar']; // talvez fazer o validador de tipo de processo no validator geral
 
     private const VALID_CONFLICT_OBJECTS = [
         'divorcio',
@@ -57,6 +57,11 @@ class FamilyValidator implements ValidatorInterface {
 
 
 // utilização desses para validar no cadastro
+
+public static function getTipoProcesso(): array {
+    return self::VALID_PROCESS_TYPES;
+}
+
     public static function getObjetoConflito(): array {
         return self::VALID_CONFLICT_OBJECTS;
     }

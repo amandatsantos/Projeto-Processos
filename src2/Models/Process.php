@@ -1,5 +1,6 @@
 <?php
 class Process {
+    private $id;  // declarar a propriedade id
     private $tipoProcesso;
     private $autorNome;
     private $autorIdentificacao;
@@ -86,6 +87,14 @@ class Process {
         $this->objetoConflito = $objetoConflito;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+
+    public function getId() {
+        return $this->id;
+    }
     
     public function getTipoProcesso() {
         return $this->tipoProcesso;
@@ -231,7 +240,7 @@ class Process {
         $this->objetoConflito = $objetoConflito;
     }
 
-    //  retorna as partes envolvidas no processo
+    //  retorna as partes envolvidas no processo se precisar dps :/
     public function getParties() {
         return [$this->autorNome, $this->reuNome];
     }

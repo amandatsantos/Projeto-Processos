@@ -23,7 +23,7 @@ class CivilValidator implements ValidatorInterface {
     
     private const VALID_DIREITO_VIOLADO = ['direito do consumidor'];
     
-    private const VALID_COURTS = ['1 vara civil', '1 vara civi', '2 vara civil'];
+    private const VALID_COURTS = ['1 vara civil', '1 vara civil', '2 vara civil'];
     
 
     public function validate(Process $process): bool {
@@ -49,6 +49,11 @@ class CivilValidator implements ValidatorInterface {
 
         return true;
     }
+
+    public static function getTipoProcesso(): array {
+        return self::VALID_PROCESS_TYPES;
+    }
+
 
     public static function getObjetoConflito(): array {
         return self::VALID_CONFLICT_OBJECTS;

@@ -1,5 +1,5 @@
 <?php
-require_once 'config/DatabaseConnection.php';
+require_once __DIR__ . '/../config/DatabaseConnection.php';
 
 // Facade
 class ProcessFacade {
@@ -65,7 +65,7 @@ class ProcessFacade {
             $stmt->bindParam(':dataProtocolacao', $dataProtocolacao);
     
             if ($stmt->execute()) {
-                return $this->conn->lastInsertId(); // Retorna o ID do processo inserido
+                return $this->conn->lastInsertId(); // 
             }
             return false; // Falha na execução
         } catch (Exception $e) {
@@ -83,53 +83,51 @@ class ProcessFacade {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateProcess($process) {
-        $sql = "UPDATE process SET 
+    public function searchProcess($searchTerm) {
+        $query = "SELECT * FROM process WHERE id = :id ";
+        try {
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':id', $searchTerm, PDO::PARAM_INT); // 
+           
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Erro ao buscar o processo: " . $e->getMessage());
+        }
+    }
+
+
+
+    public function updateProcess($data) {
+        $query = "UPDATE process SET 
                     tipoProcesso = :tipoProcesso,
                     autorNome = :autorNome,
                     autorIdentificacao = :autorIdentificacao,
                     reuNome = :reuNome,
                     reuIdentificacao = :reuIdentificacao,
-                    objetoConflito=:objetoConflito,
                     descricaoCaso = :descricaoCaso,
-                    fatos = :fatos,
-                    direitoViolado = :direitoViolado,
-                    pedido = :pedido,
-                    juizo = :juizo,
-                    varaTribunal = :varaTribunal,
-                    comarca = :comarca,
-                    valorCausa = :valorCausa,
-                    advogadoNome = :advogadoNome,
-                    advogadoOAB = :advogadoOAB,
-                    advogadoContato = :advogadoContato,
-                    dataProtocolacao = :dataProtocolacao
-                WHERE id = :id";
-
-        $stmt = $this->conn->prepare($sql);
-
-        $stmt->bindParam(':id', $process->id);
-        $stmt->bindParam(':tipoProcesso', $process->tipoProcesso);
-        $stmt->bindParam(':autorNome', $process->autorNome);
-        $stmt->bindParam(':autorIdentificacao', $process->autorIdentificacao);
-        $stmt->bindParam(':reuNome', $process->reuNome);
-        $stmt->bindParam(':reuIdentificacao', $process->reuIdentificacao);
-        $stmt->bindParam(':objetoConflit', $process->objetoConflito);
-        $stmt->bindParam(':descricaoCaso', $process->descricaoCaso);
-        $stmt->bindParam(':fatos', $process->fatos);
-        $stmt->bindParam(':direitoViolado', $process->direitoViolado);
-        $stmt->bindParam(':pedido', $process->pedido);
-        $stmt->bindParam(':juizo', $process->juizo);
-        $stmt->bindParam(':varaTribunal', $process->varaTribunal);
-        $stmt->bindParam(':comarca', $process->comarca);
-        $stmt->bindParam(':valorCausa', $process->valorCausa);
-        $stmt->bindParam(':advogadoNome', $process->advogadoNome);
-        $stmt->bindParam(':advogadoOAB', $process->advogadoOAB);
-        $stmt->bindParam(':advogadoContato', $process->advogadoContato);
-        $stmt->bindParam(':dataProtocolacao', $process->dataProtocolacao);
-
-        return $stmt->execute();
+                    valorCausa = :valorCausa
+                  WHERE id = :id";
+    
+        try {
+            $stmt = $this->conn->prepare($query); // 
+            $stmt->bindValue(':tipoProcesso', $data['tipo_processo']);
+            $stmt->bindValue(':autorNome', $data['nome_cliente']);
+            $stmt->bindValue(':autorIdentificacao', $data['cpf_cliente']);
+            $stmt->bindValue(':reuNome', $data['oponente']);
+            $stmt->bindValue(':reuIdentificacao', $data['cpf_oponente']);
+            $stmt->bindValue(':descricaoCaso', $data['descricao']);
+            $stmt->bindValue(':valorCausa', $data['valor_causa']);
+            $stmt->bindValue(':id', $data['update_id']); // 
+    
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao atualizar o processo.");
+            }
+        } catch (Exception $e) {
+            throw new Exception("Erro ao executar o update: " . $e->getMessage());
+        }
     }
-
+    
     public function deleteProcess($id) {
         $sql = "DELETE FROM process WHERE id = :id";
         $stmt = $this->conn->prepare($sql);

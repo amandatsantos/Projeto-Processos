@@ -1,56 +1,57 @@
 <?php
 // teste.php
 
-require_once 'Process.php';
-require_once 'ProcessFacade.php';
-require_once 'ProcessValidator.php';
-require_once 'Validators/CivilValidator.php';
-require_once 'Validators/CriminalValidator.php';
-require_once 'Validators/FamilyValidator.php';
-require_once 'Validators/LaborValidator.php';
+require_once 'Models/Process.php';
+require_once 'Controller/ProcessFacade.php';
+require_once 'Models/ProcessValidator.php';
+require_once __DIR__ . '/Validators/FamilyValidator.php';
+require_once __DIR__ . '/Validators/CriminalValidator.php';
+require_once __DIR__ . '/Validators/LaborValidator.php';
+require_once __DIR__ . '/Validators/CivilValidator.php';
+
 
 
 // Criação de um processo de exemplo
 
 
-$processLabor = new Process(
-    "Trabalhista", // tipo processo 
-    "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
-    "Descrição do caso", "Fatos do caso", 
-    "horas extras nao pagas",// direito violado
-     "Pedido",
-    "Juízo 1", 
-    "3 vara do trabalho",// qual instancia de uso
-     "Comarca Central", 50000.00, 
-    "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
-    "horas extras"// obejto de conflito
-);
+// $processLabor = new Process(
+//     "Trabalhista", // tipo processo 
+//     "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
+//     "Descrição do caso", "Fatos do caso", 
+//     "horas extras nao pagas",// direito violado
+//      "Pedido",
+//     "Juízo 1", 
+//     "3 vara do trabalho",// qual instancia de uso
+//      "Comarca Central", 50000.00, 
+//     "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
+//     "horas extras"// obejto de conflito
+// );
 
-$processCriminal = new Process(
-    "Criminal", // tipo processo 
-    "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
-    "Descrição do caso", "Fatos do caso", 
-    "direito a propriedade",// direito violado
-     "Pedido",
-    "Juízo 1", 
-    "teste",// qual instancia de uso
-     "Comarca Central", 50000.00, 
-    "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
-    "roubo"// obejto de conflito
-);
-// Criação de um processo de exemplo com novos campos
-$processCivil = new Process(
-    "Civil", // tipo processo 
-    "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
-    "Descrição do caso", "Fatos do caso", 
-    "Direito do consumidoro",// direito violado
-     "Pedido",
-    "Juízo 1", 
-    "1 Vara cívil",// qual instancia de uso
-     "Comarca Central", 50000.00, 
-    "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
-    "Restituição do valor pago"// obejto de conflito
-);
+// $processCriminal = new Process(
+//     "Criminal", // tipo processo 
+//     "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
+//     "Descrição do caso", "Fatos do caso", 
+//     "direito a propriedade",// direito violado
+//      "Pedido",
+//     "Juízo 1", 
+//     "teste",// qual instancia de uso
+//      "Comarca Central", 50000.00, 
+//     "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
+//     "roubo"// obejto de conflito
+// );
+// // Criação de um processo de exemplo com novos campos
+// $processCivil = new Process(
+//     "Civil", // tipo processo 
+//     "teste  da Silva teste ", "123456789", "Empresa XYZ", "987654321",
+//     "Descrição do caso", "Fatos do caso", 
+//     "Direito do consumidoro",// direito violado
+//      "Pedido",
+//     "Juízo 1", 
+//     "1 Vara cívil",// qual instancia de uso
+//      "Comarca Central", 50000.00, 
+//     "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
+//     "Restituição do valor pago"// obejto de conflito
+// );
 
 $processFamily = new Process(
     "Familiar", // tipo processo 
@@ -59,7 +60,7 @@ $processFamily = new Process(
     "prestacao de alimentos",// direito violado
      "Pedido",
     "Juízo 1", 
-    "2 Vara familiar",// qual instancia de uso
+    "2 vara familiar",// qual instancia de uso
      "Comarca Central", 50000.00, 
     "Advogado Fulano", "OAB-12345", "99999-9999", "2024-11-18", 
     "pensao"// obejto de conflito
