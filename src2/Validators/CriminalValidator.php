@@ -8,26 +8,48 @@ class CriminalValidator implements ValidatorInterface {
     private const VALID_PROCESS_TYPES = ['Criminal']; // talvez fazer o validador de tipo de processo no validator geral
 
     private const VALID_CONFLICT_OBJECTS = [
-        'infracoes penais',
-        'contravencoes',
-        'homicidio',
+        'infrações penais',
+        'contravenções',
+        'homicídio',
         'roubo',
         'furto',
-        'lesao corporal',
-        'trafico de drogas'
+        'lesão corporal',
+        'tráfico de drogas',
+        'ameaça',
+        'estupro',
+        'crimes contra a honra',
+        'lavagem de dinheiro',
+        'corrupção',
+        'extorsão',
+        'sequestro e cárcere privado',
+        'porte ilegal de arma',
+        'crimes ambientais',
+        'organização criminosa',
+        'violência doméstica',
+        'crimes cibernéticos'
     ];
 
     private const VALID_DIREITO_VIOLADO = [
-        'direito a vida',
-        'direito a propriedade',
-        'saude publica'
+        'direito à vida',
+        'direito à liberdade',
+        'direito à integridade física',
+        'direito à propriedade',
+        'direito à segurança',
+        'direito à honra',
+        'direito à dignidade',
+        'direito à saúde pública',
+        'direito ao meio ambiente',
+        'direito à proteção da infância e juventude'
     ];
 
     private const VALID_COURTS = [
-        '1 vara criminal',
-        '2 vara criminal',
-        '3 vara criminal',
- 
+      '1ª Vara Criminal',
+    '2ª Vara Criminal',
+    '3ª Vara Criminal',
+    'Vara do Júri',
+    'Vara de Execuções Penais',
+    'Vara de Violência Doméstica',
+    'Juizado Especial Criminal'
     ];
 
     public function validate(Process $process): bool {

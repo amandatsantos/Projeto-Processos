@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../Models/Process.php';
+// require_once __DIR__ . '/../Models/Process.php';
 require_once __DIR__ . '/../Models/ProcessFactory.php';
 require_once __DIR__ . '/../Controller/ProcessFacade.php';
 require_once __DIR__ . '/../Models/ProcessValidator.php';
@@ -18,21 +18,27 @@ class ProcessController {
 
     // principal para tratar requisições
     public function handleRequest() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (isset($_POST['delete_id'])) {
-                    $this->deleteProcess($_POST['delete_id']);
+                    $this->deleteProcess((int) $_POST['delete_id']);
                 } elseif (isset($_POST['update_id'])) {
                     $process = $this->createProcessFromPost($_POST);
                     $this->updateProcess($process);
                 } else {
                     $this->createOrUpdateProcess($_POST);
                 }
-            } catch (Exception $e) {
-                echo "Erro: " . $e->getMessage();
+            } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                if (isset($_GET['id'])) {
+                    echo json_encode($this->getProcessById((int) $_GET['id']));
+                } elseif (isset($_GET['search'])) {
+                    echo json_encode($this->searchProcess($_GET['search']));
+                }
             }
-        }
-    }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo "Erro ao processar a requisição: " . $e->getMessage();
+        } }
 
     public function getAllProcesses() {
         try {

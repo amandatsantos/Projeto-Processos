@@ -10,25 +10,44 @@ class FamilyValidator implements ValidatorInterface {
     private const VALID_PROCESS_TYPES = ['Familiar']; // talvez fazer o validador de tipo de processo no validator geral
 
     private const VALID_CONFLICT_OBJECTS = [
-        'divorcio',
-        'investigacao de paternidade',
-        'adocao',
+        'divórcio',
+        'investigação de paternidade',
+        'adoção',
         'guarda',
-        'pensao',
-        'interdicao',
-        'partilha de bens'
+        'pensão alimentícia',
+        'interdição',
+        'partilha de bens',
+        'regulamentação de visitas',
+        'reconhecimento e dissolução de união estável',
+        'alienação parental',
+        'emancipação',
+        'direito de sucessão',
+        'convivência com os avós',
+        'destituição do poder familiar',
+        'medidas protetivas envolvendo violência doméstica'
     ];
 
     private const VALID_DIREITO_VIOLADO = [
-        'direito a dissolucao do vinculo matrimonial',
-        'direito a filiacao',
-        'prestacao de alimentos',
-        'convivencia familiar'
+        'direito à dissolução do vínculo matrimonial',
+    'direito à filiação',
+    'prestação de alimentos',
+    'convivência familiar',
+    'direito à guarda compartilhada',
+    'direito à proteção contra alienação parental',
+    'direito à sucessão',
+    'direito à adoção',
+    'direito à proteção de incapazes',
+    'direito à convivência digna no núcleo familiar'
     ];
 
     private const VALID_COURTS = [
-        '1 vara familiar',
-        '2 vara familiar'
+        '1ª Vara de Família',
+        '2ª Vara de Família',
+        '3ª Vara de Família',
+        'Juizado de Violência Doméstica',
+        'Vara de Infância e Juventude',
+        'Vara de Sucessões'
+
     ];
 
     public function validate(Process $process): bool {

@@ -8,26 +8,47 @@ class LaborValidator implements ValidatorInterface {
     private const VALID_PROCESS_TYPES = ['Trabalhista']; // talvez fazer o validador de tipo de processo no validator geral
 
     private const VALID_DIREITO_VIOLADO = [
-        'relacao empregaticia',
-        'demissao',
-        'ferias',
-        '13 salario',
-        'demissao sem justa causa',
-        'atraso no pagamento de salarios',
-        'horas extras nao pagas',
-        'acidente de trabalho'
+        'relação empregatícia',
+        'demissão',
+        'férias não concedidas',
+        '13º salário não pago',
+        'demissão sem justa causa',
+        'atraso no pagamento de salários',
+        'horas extras não pagas',
+        'acidente de trabalho',
+        'não recolhimento do FGTS',
+        'assédio moral no ambiente de trabalho',
+        'assédio sexual no ambiente de trabalho',
+        'diferenças salariais',
+        'estabilidade por acidente de trabalho ou gravidez',
+        'não fornecimento de EPI',
+        'rescisão indireta do contrato de trabalho',
+        'reintegração ao emprego',
+        'desvio ou acúmulo de função'
     ];
 
     private const VALID_CONFLICT_OBJECTS = [
         'pagamento de horas extras',
-        'salario minimo',
-        'horas extras'
+        'salário mínimo',
+        'horas extras',
+        'pagamento de verbas rescisórias',
+        'adicional noturno',
+        'adicional de insalubridade',
+        'adicional de periculosidade',
+        'reconhecimento de vínculo empregatício',
+        'acidente de trabalho e indenizações',
+        'equiparação salarial',
+        'rescisão contratual',
+        'dano moral trabalhista'
     ];
 
     private const VALID_COURTS = [
-        '1 vara do trabalho',
-        '2 vara do trabalho',
-        '3 vara do trabalho'
+        '1ª Vara do Trabalho',
+        '2ª Vara do Trabalho',
+        '3ª Vara do Trabalho',
+        'Vara de Execuções Trabalhistas',
+        'Tribunal Regional do Trabalho',
+        'Juízo de Conciliação e Julgamento'
     ];
 
     public function validate(Process $process): bool {

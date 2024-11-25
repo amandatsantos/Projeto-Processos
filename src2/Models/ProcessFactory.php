@@ -1,5 +1,7 @@
 <?php
 // ProcessFactory.php
+require_once __DIR__ . '/Process.php';
+
 
 class ProcessFactory {
     public function createProcess($postData) {

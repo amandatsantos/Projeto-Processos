@@ -15,15 +15,40 @@ class CivilValidator implements ValidatorInterface {
     private const VALID_CONFLICT_OBJECTS = [
         'conflito sobre contrato comercial',
         'contratos',
-        'indenizacoes',
+        'indenizações',
         'propriedade',
         'conflito de terras',
-        'restituicao do valor pago'
+        'restituição do valor pago',
+        'conflitos familiares',
+        'questões de inventário e partilha',
+        'execuções fiscais',
+        'disputas trabalhistas',
+        'questões tributárias',
+        'direitos autorais',
+        'responsabilidade civil',
+        'locação de imóveis',
+        'alienação fiduciária',
+        'direitos de vizinhança',
+        'dissolução de sociedade',
+        'danos morais'
     ];
     
-    private const VALID_DIREITO_VIOLADO = ['direito do consumidor'];
+    private const VALID_DIREITO_VIOLADO = ['direito do consumidor',
+    'direito de propriedade',
+    'direito contratual',
+    'direito de vizinhança',
+    'direito sucessório',
+    'direito à indenização',
+    'direito à restituição de valores',
+    'direito de locação',
+    'direito à posse'];
     
-    private const VALID_COURTS = ['1 vara civil', '1 vara civil', '2 vara civil'];
+    private const VALID_COURTS = [    '1ª Vara Cível',
+    '2ª Vara Cível',
+    '3ª Vara Cível',
+    'Vara de Família',
+    'Juizado Especial Cível',
+    'Vara de Registro de Imóveis'];
     
 
     public function validate(Process $process): bool {
