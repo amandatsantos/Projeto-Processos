@@ -1,6 +1,9 @@
 <?php
 // ProcessFactory.php
-require_once __DIR__ . '/Process.php';
+require_once __DIR__ . '/CivilProcess.php';
+require_once __DIR__ . '/CriminalProcess.php';
+require_once __DIR__ . '/FamiliarProcess.php';
+require_once __DIR__ . '/LaborProcess.php';
 
 
 class ProcessFactory {

@@ -2,6 +2,7 @@
 
 interface Prototype {
     public function clone();
+    
 }
 
 class Process implements Prototype {
