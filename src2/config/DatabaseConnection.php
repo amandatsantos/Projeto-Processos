@@ -1,64 +1,47 @@
 <?php
-class DatabaseConnection {
-    private $host = 'localhost'; 
-    private $db_name = 'protocalacao_processo'; 
-    private $username = 'root';
-    private $password = 'root'; 
-    private $conn;
 
-    // conectar ao banco de dados
-    public function connect() {
-        $this->conn = null;
+namespace Config;
 
-        try {
-            // Tentando conectar ao banco de dados
-            $this->conn = new PDO("mysql:host={$this->host}", $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+use PDO;
 
-            
-            if (!$this->databaseExists($this->db_name)) {
-                $this->createDatabase($this->db_name); // 
-            }
-          
+class DatabaseConnection
+{
+    private string $host;
+    private int $port;
+    private string $database;
+    private string $username;
+    private string $password;
+    private ?PDO $connection = null;
 
-           
-            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->db_name}", $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function __construct(string $host, int $port, string $database, string $username, string $password)
+    {
+        $this->host = $host;
+        $this->port = $port;
+        $this->database = $database;
+        $this->username = $username;
+        $this->password = $password;
+    }
 
-            // n dar BO na criação ou uso do banco
-            $this->conn->exec("USE protocalacao_processo;");
+    public function connect(): PDO
+    {
+        if ($this->connection === null) {
+            $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->database}";
+            $this->connection = new PDO($dsn, $this->username, $this->password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        
             $this->createTables();
-        } catch (PDOException $e) {
-            echo "Connection error: " . $e->getMessage();
         }
 
-        return $this->conn;
+        return $this->connection;
     }
 
-    // verificar se o banco de dados existe
-    private function databaseExists($dbName) {
-        $stmt = $this->conn->prepare("SHOW DATABASES LIKE :dbName");
-        $stmt->bindParam(':dbName', $dbName);
-        $stmt->execute();
-        return $stmt->rowCount() > 0;
-    }
-
-    //  criar o banco de dados
-    private function createDatabase($dbName) {
-        try {
-            $query = "CREATE DATABASE IF NOT EXISTS {$dbName}";
-            $this->conn->exec($query);
-            echo "Banco de dados '{$dbName}' criado com sucesso.\n";
-        } catch (PDOException $e) {
-            echo "Erro ao criar banco de dados: " . $e->getMessage();
-        }
-    }
-
-    
-    private function createTables() {
+    private function createTables()
+    {
         $query = "
-        CREATE TABLE IF NOT EXISTS process (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            CREATE TABLE IF NOT EXISTS process (
+               
+ id INT AUTO_INCREMENT PRIMARY KEY,
             tipoProcesso VARCHAR(255) NOT NULL,
             autorNome VARCHAR(255),
             autorIdentificacao VARCHAR(255),
@@ -77,11 +60,9 @@ class DatabaseConnection {
             advogadoOAB VARCHAR(50),
             advogadoContato VARCHAR(50),
             dataProtocolacao DATE
-        );";
-        try {
-            $this->conn->exec($query);
-        } catch (PDOException $e) {
-            echo "Erro ao criar a tabela: " . $e->getMessage();
-        }
-    }}
-?>
+            );
+        ";
+
+        $this->connection->exec($query);
+    }
+}

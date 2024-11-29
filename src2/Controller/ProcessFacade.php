@@ -1,13 +1,27 @@
 <?php
-require_once __DIR__ . '/../config/DatabaseConnection.php';
+require_once __DIR__ . '/../config/DatabaseDirector.php';
+require_once __DIR__ . '/../config/MySQLBuilder.php';
 
-// Facade
+use Config\Director;
+use Config\MySQLBuilder;
+
 class ProcessFacade {
     private $conn;
 
     public function __construct() {
-        $database = new DatabaseConnection();
-        $this->conn = $database->connect();
+        // Instanciando o Builder e o Director
+        $builder = new MySQLBuilder();
+        $director = new Director($builder);
+
+        // Criando a conexão com as configurações de desenvolvimento
+        $databaseConnection = $director->buildDevelopmentConnection();
+        $this->conn = $databaseConnection->connect();
+    }
+
+    public function executeQuery($query, $params = []) {
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function createProcess($process) {
