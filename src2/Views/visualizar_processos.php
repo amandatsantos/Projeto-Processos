@@ -6,7 +6,7 @@ try {
     $processController = new ProcessController();
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
-        // Realiza a busca
+        //  busca
         $searchTerm = $_GET['search'];
         $processos = $processController->searchProcess($searchTerm);
 
@@ -14,7 +14,7 @@ try {
             $error = "Nenhum processo encontrado com o termo '$searchTerm'.";
         }
     } else {
-        // Exibe todos os processos
+        // exibe  processos
         $processos = $processController->getAllProcesses();
     }
 } catch (Exception $e) {

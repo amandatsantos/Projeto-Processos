@@ -13,7 +13,7 @@ class Director
         $this->builder = $builder;
     }
 
-    public function buildDevelopmentConnection(): DatabaseConnection
+    public function buildConnection(): DatabaseConnection
     {
         return $this->builder
             ->setHost('localhost')

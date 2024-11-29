@@ -9,12 +9,10 @@ class ProcessFacade {
     private $conn;
 
     public function __construct() {
-        // Instanciando o Builder e o Director
         $builder = new MySQLBuilder();
         $director = new Director($builder);
 
-        // Criando a conexão com as configurações de desenvolvimento
-        $databaseConnection = $director->buildDevelopmentConnection();
+        $databaseConnection = $director->buildConnection();
         $this->conn = $databaseConnection->connect();
     }
 
@@ -34,7 +32,7 @@ class ProcessFacade {
             :tipoProcesso, :autorNome, :autorIdentificacao, :reuNome, :reuIdentificacao, :objetoConflito,
             :descricaoCaso, :fatos, :direitoViolado, :pedido, :juizo, 
             :varaTribunal, :comarca, :valorCausa, :advogadoNome, 
-            :advogadoOAB, :advogadoContato, :dataProtocolacao
+            :advogadoOAB, :advogadoContato,  DEFAULT
         )";
     
         try {
@@ -57,7 +55,6 @@ class ProcessFacade {
             $advogadoNome = $process->getAdvogadoNome();
             $advogadoOAB = $process->getAdvogadoOAB();
             $advogadoContato = $process->getAdvogadoContato();
-            $dataProtocolacao = $process->getDataProtocolacao();
     
             $stmt->bindParam(':tipoProcesso', $tipoProcesso);
             $stmt->bindParam(':autorNome', $autorNome);
@@ -76,7 +73,6 @@ class ProcessFacade {
             $stmt->bindParam(':advogadoNome', $advogadoNome);
             $stmt->bindParam(':advogadoOAB', $advogadoOAB);
             $stmt->bindParam(':advogadoContato', $advogadoContato);
-            $stmt->bindParam(':dataProtocolacao', $dataProtocolacao);
     
             if ($stmt->execute()) {
                 return $this->conn->lastInsertId(); // 
@@ -84,7 +80,7 @@ class ProcessFacade {
             return false; // Falha na execução
         } catch (Exception $e) {
             // 
-            echo "Erro ao salvar processo: " . $e->getMessage();
+          //  echo "Erro ao salvar processo: " . $e->getMessage();
             return false;
         }
     }

@@ -4,14 +4,9 @@
 require_once __DIR__ . '/../Models/ProcessValidator.php';
 
 
-// interface ValidatorInterface {
-//     public function validate(Process $process): bool;
-// }
-
 class CivilValidator implements ValidatorInterface {
-    // verificarse serão esses que darão a validação para cada campo
-    private const VALID_PROCESS_TYPES = ['Civil']; // talvez fazer o validador de tipo de processo no validator geral
-
+   
+    private const VALID_PROCESS_TYPES = ['Civil']; 
     private const VALID_CONFLICT_OBJECTS = [
         'conflito sobre contrato comercial',
         'contratos',

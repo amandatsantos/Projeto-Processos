@@ -59,7 +59,7 @@ class DatabaseConnection
             advogadoNome VARCHAR(255),
             advogadoOAB VARCHAR(50),
             advogadoContato VARCHAR(50),
-            dataProtocolacao DATE
+            dataProtocolacao  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         ";
 

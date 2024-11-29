@@ -5,7 +5,7 @@ require_once __DIR__ . '/../Models/ProcessValidator.php';
 
 
 class LaborValidator implements ValidatorInterface {
-    private const VALID_PROCESS_TYPES = ['Trabalhista']; // talvez fazer o validador de tipo de processo no validator geral
+    private const VALID_PROCESS_TYPES = ['Trabalhista']; 
 
     private const VALID_DIREITO_VIOLADO = [
         'relação empregatícia',

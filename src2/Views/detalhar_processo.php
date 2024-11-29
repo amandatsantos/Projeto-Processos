@@ -102,8 +102,22 @@ try {
             <td><?= htmlspecialchars($processo['advogadoContato']) ?></td>
         </tr>
         <tr>
-            <th>Data de Protocolação</th>
-            <td><?= htmlspecialchars(date('d/m/Y', strtotime($processo['dataProtocolacao']))) ?></td>
+        <th>Data de Protocolação</th>
+    <td>
+        <?php 
+        if (!empty($processo['dataProtocolacao'])) {
+            $date = DateTime::createFromFormat('Y-m-d H:i:s', $processo['dataProtocolacao']);
+            
+            if ($date) {
+                echo htmlspecialchars($date->format('d/m/Y'));
+            } else {
+                echo "Data inválida";
+            }
+        } else {
+            echo "Data não fornecida";
+        }
+        ?>
+    </td>
         </tr>
     </table>
     <br>
